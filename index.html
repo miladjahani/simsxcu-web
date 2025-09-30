@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="SimSXCu - شبیه‌ساز استخراج حلال مس - نسخه تحت وب" />
+    <meta name="keywords" content="مس, استخراج حلال, شبیه‌سازی, SimSXCu, هیدرومتالورژی" />
+    <meta name="author" content="Joseph Kafumbila" />
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="SimSXCu Web Version" />
+    <meta property="og:description" content="شبیه‌ساز استخراج حلال مس با Lix984N - نسخه تحت وب" />
+    <meta property="og:type" content="website" />
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json" />
+    
+    <title>SimSXCu Web - شبیه‌ساز استخراج حلال مس</title>
+    
+    <!-- Preload critical resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <style>
+      /* Loading animation */
+      #loading {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        color: white;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+      
+      .spinner {
+        width: 50px;
+        height: 50px;
+        border: 4px solid rgba(255, 255, 255, 0.3);
+        border-top: 4px solid white;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin-bottom: 20px;
+      }
+      
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      
+      .loading-text {
+        font-size: 18px;
+        margin-bottom: 10px;
+      }
+      
+      .loading-subtext {
+        font-size: 14px;
+        opacity: 0.8;
+      }
+      
+      /* Hide loading screen when app loads */
+      .loaded #loading {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Loading Screen -->
+    <div id="loading">
+      <div class="spinner"></div>
+      <div class="loading-text">SimSXCu در حال بارگذاری...</div>
+      <div class="loading-subtext">شبیه‌ساز استخراج حلال مس</div>
+    </div>
+
+    <div id="root"></div>
+    
+    <script type="module">
+      // Hide loading screen when app is ready
+      window.addEventListener('load', function() {
+        setTimeout(() => {
+          document.body.classList.add('loaded');
+        }, 1000);
+      });
+      
+      // Fallback: hide loading after 5 seconds
+      setTimeout(() => {
+        document.body.classList.add('loaded');
+      }, 5000);
+    </script>
+  </body>
+</html>
