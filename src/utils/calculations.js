@@ -7,15 +7,12 @@ export class SimulationEngine {
 
   // محاسبه AML (حداکثر بارگذاری وقتی اسید آزاد صفر است)
   calculateAML(v_v_percent) {
-    if (v_v_percent <= 0) {
-      return 0;
-    }
     return 0.4108 * Math.pow(v_v_percent, 1.1);
   }
 
   // محاسبه ML (حداکثر بارگذاری)
   calculateML(PLS_Ac, PLS_Cu, v_v_percent, AML) {
-    if (v_v_percent <= 0 || AML <= 0) {
+    if (v_v_percent === 0 || PLS_Cu === 0 || AML === 0) {
       return 0;
     }
     const term1 = Math.pow(PLS_Ac, 2) / PLS_Cu;
@@ -27,16 +24,19 @@ export class SimulationEngine {
 
   // محاسبه بازیابی استخراج
   calculateExtractionRecovery(PLS_Cu, raffinate_Cu) {
+    if (PLS_Cu === 0) return 0;
     return ((PLS_Cu - raffinate_Cu) / PLS_Cu) * 100;
   }
 
   // محاسبه بازیابی stripping
   calculateStrippingRecovery(loaded_organic, stripped_organic) {
+    if (loaded_organic === 0) return 0;
     return ((loaded_organic - stripped_organic) / loaded_organic) * 100;
   }
 
   // محاسبه انتقال خالص
   calculateNetTransfer(loaded_organic, stripped_organic, v_v_percent) {
+    if (v_v_percent === 0) return 0;
     return (loaded_organic - stripped_organic) / v_v_percent;
   }
 
@@ -92,7 +92,7 @@ export class SimulationEngine {
     const results = this.simulateOption1(parameters);
     
     // محاسبات اضافی برای Option 2
-    results.saturation_ratio = results.ML > 0 ? (results.loaded_organic / results.ML) * 100 : 0;
+    results.saturation_ratio = (results.loaded_organic / results.ML) * 100;
     results.mixer_efficiency_E1 = parameters.Mef1e;
     results.mixer_efficiency_E2 = parameters.Mef2e;
 
