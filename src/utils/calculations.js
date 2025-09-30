@@ -7,11 +7,17 @@ export class SimulationEngine {
 
   // محاسبه AML (حداکثر بارگذاری وقتی اسید آزاد صفر است)
   calculateAML(v_v_percent) {
+    if (v_v_percent <= 0) {
+      return 0;
+    }
     return 0.4108 * Math.pow(v_v_percent, 1.1);
   }
 
   // محاسبه ML (حداکثر بارگذاری)
   calculateML(PLS_Ac, PLS_Cu, v_v_percent, AML) {
+    if (v_v_percent <= 0 || AML <= 0) {
+      return 0;
+    }
     const term1 = Math.pow(PLS_Ac, 2) / PLS_Cu;
     const term2 = (-28.511 * Math.pow(v_v_percent, -1.746) * AML + 
                   11.711 * Math.pow(v_v_percent, -0.646)) * 
@@ -86,7 +92,7 @@ export class SimulationEngine {
     const results = this.simulateOption1(parameters);
     
     // محاسبات اضافی برای Option 2
-    results.saturation_ratio = (results.loaded_organic / results.ML) * 100;
+    results.saturation_ratio = results.ML > 0 ? (results.loaded_organic / results.ML) * 100 : 0;
     results.mixer_efficiency_E1 = parameters.Mef1e;
     results.mixer_efficiency_E2 = parameters.Mef2e;
 
