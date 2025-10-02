@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SimSXCu v2.0 - Copper SX Simulation</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>SimSXCu v2.0</h1>
+            <p>Copper Solvent Extraction Simulation Engine</p>
+        </header>
+
+        <main>
+            <div class="card">
+                <h2>Select Operating Mode</h2>
+                <div class="mode-selector">
+                    <label>
+                        <input type="radio" name="mode" value="designer" checked>
+                        <span>Designer Mode</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="mode" value="metallurgist">
+                        <span>Plant Metallurgist Mode</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Designer Mode Parameters -->
+            <form id="designer-form" class="parameter-form active">
+                <div class="card">
+                    <h3>Designer Mode Inputs</h3>
+                    <div class="grid-container">
+                        <div class="input-group"><label for="des_PLS_flow">PLS Flow (m³/h)</label><input type="number" id="des_PLS_flow" value="400"></div>
+                        <div class="input-group"><label for="des_PLS_Cu">PLS Cu (g/L)</label><input type="number" id="des_PLS_Cu" value="2.5"></div>
+                        <div class="input-group"><label for="des_PLS_Ac">PLS Ac (g/L)</label><input type="number" id="des_PLS_Ac" value="1.6"></div>
+                        <div class="input-group"><label for="des_SR">Saturation Ratio (%)</label><input type="number" id="des_SR" value="92"></div>
+                        <div class="input-group"><label for="des_O_A_Ext">O/A Ratio (Extraction)</label><input type="number" id="des_O_A_Ext" value="1"></div>
+                        <div class="input-group"><label for="des_Mef1e">Mixer Efficiency E1 (%)</label><input type="number" id="des_Mef1e" value="92"></div>
+                        <div class="input-group"><label for="des_Mef2e">Mixer Efficiency E2 (%)</label><input type="number" id="des_Mef2e" value="95"></div>
+                        <div class="input-group"><label for="des_SP_Cu">Spent Electrolyte Cu (g/L)</label><input type="number" id="des_SP_Cu" value="30"></div>
+                        <div class="input-group"><label for="des_SP_Ac">Spent Electrolyte Ac (g/L)</label><input type="number" id="des_SP_Ac" value="190"></div>
+                        <div class="input-group"><label for="des_AD_Cu">Advanced Electrolyte Cu (g/L)</label><input type="number" id="des_AD_Cu" value="50"></div>
+                        <div class="input-group"><label for="des_Mef1s">Mixer Efficiency S1 (%)</label><input type="number" id="des_Mef1s" value="98"></div>
+                        <div class="input-group"><label for="des_initial_vv_guess">Initial v/v % Guess</label><input type="number" id="des_initial_vv_guess" value="10.0"></div>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Metallurgist Mode Parameters -->
+            <form id="metallurgist-form" class="parameter-form">
+                <div class="card">
+                    <h3>Plant Metallurgist Mode Inputs</h3>
+                    <div class="grid-container">
+                        <div class="input-group"><label for="met_PLS_flow">PLS Flow (m³/h)</label><input type="number" id="met_PLS_flow" value="400"></div>
+                        <div class="input-group"><label for="met_PLS_Cu">PLS Cu (g/L)</label><input type="number" id="met_PLS_Cu" value="2.5"></div>
+                        <div class="input-group"><label for="met_PLS_Ac">PLS Ac (g/L)</label><input type="number" id="met_PLS_Ac" value="1.6"></div>
+                        <div class="input-group"><label for="met_O_A_Ext">O/A Ratio (Extraction)</label><input type="number" id="met_O_A_Ext" value="1"></div>
+                        <div class="input-group"><label for="met_ML_plant">ML from Plant (g/L)</label><input type="number" id="met_ML_plant" value="4.386"></div>
+                        <div class="input-group"><label for="met_SP_Cu">Spent Electrolyte Cu (g/L)</label><input type="number" id="met_SP_Cu" value="30"></div>
+                        <div class="input-group"><label for="met_SP_Ac">Spent Electrolyte Ac (g/L)</label><input type="number" id="met_SP_Ac" value="190"></div>
+                        <div class="input-group"><label for="met_AD_Cu">Advanced Electrolyte Cu (g/L)</label><input type="number" id="met_AD_Cu" value="50"></div>
+                        <div class="input-group"><label for="met_Mef1s">Mixer Efficiency S1 (%)</label><input type="number" id="met_Mef1s" value="98"></div>
+                        <div class="input-group"><label for="met_raffinate_Cu_target">Raffinate Cu Target (g/L)</label><input type="number" id="met_raffinate_Cu_target" value="0.28"></div>
+                        <div class="input-group"><label for="met_stripped_organic_Cu_target">Stripped Organic Cu Target (g/L)</label><input type="number" id="met_stripped_organic_Cu_target" value="1.8"></div>
+                        <div class="input-group"><label for="met_initial_guess_vv">Initial Guess v/v %</label><input type="number" id="met_initial_guess_vv" value="8.0"></div>
+                        <div class="input-group"><label for="met_initial_guess_sr">Initial Guess SR %</label><input type="number" id="met_initial_guess_sr" value="90.0"></div>
+                        <div class="input-group"><label for="met_initial_guess_mef1e">Initial Guess Mef1e %</label><input type="number" id="met_initial_guess_mef1e" value="90.0"></div>
+                        <div class="input-group"><label for="met_initial_guess_mef2e">Initial Guess Mef2e %</label><input type="number" id="met_initial_guess_mef2e" value="95.0"></div>
+                    </div>
+                </div>
+            </form>
+
+            <div class="action-bar">
+                <button id="solve-button">Run Simulation</button>
+            </div>
+
+            <div id="results-container" class="card hidden">
+                <h2>Simulation Results</h2>
+                <pre id="results-output"></pre>
+            </div>
+        </main>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
